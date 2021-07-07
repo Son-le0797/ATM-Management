@@ -122,7 +122,7 @@ public class CustomerService {
         }
 
         System.out.println("Nhap so tien khoi tao tai khoan: ");
-        int balance = new Scanner(System.in).nextInt();
+        long balance = new Scanner(System.in).nextLong();
 
         add(new Customer(Name,password,dob,gender,email,balance));
     }
@@ -255,7 +255,7 @@ public class CustomerService {
     }
 
     public static boolean checkEmail(String email){
-        String regex = "^[a-zA-Z0-9]+[a-zA-Z0-9]*@\\w{4,24}.com$";
+        String regex = "^[a-zA-Z0-9]+[a-zA-Z0-9._]*@\\w{4,24}.com$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
@@ -276,7 +276,7 @@ public class CustomerService {
     }
 
     public static boolean checkCustomerName(String username){
-        String regex = "^[A-Za-z0-9]+[a-zA-Z0-9._]{4,256}";
+        String regex = "^[A-Za-z0-9]+[a-zA-Z0-9._\\s]{4,256}";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(username);
         return matcher.matches();
