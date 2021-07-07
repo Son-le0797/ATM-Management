@@ -19,15 +19,20 @@ public class CustomerData {
 
     public void writeFile() throws IOException {
         File file = new File(PATH);
-        if (!file.exists()) { file.createNewFile(); }
+        if (!file.exists()) {
+            file.createNewFile();
 
-        FileWriter fileWriter = new FileWriter(file);
-        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-        for (Map.Entry<String, Customer> entry : listCustomer.entrySet()){
-
-            bufferedWriter.write(entry.getValue().toStringCSV());
         }
-        bufferedWriter.close();
+        else {
+            FileWriter fileWriter = new FileWriter(file);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            for (Map.Entry<String, Customer> entry : listCustomer.entrySet()){
+
+                bufferedWriter.write(entry.getValue().toStringCSV());
+            }
+            bufferedWriter.close();
+        }
+
     }
 
     public void add(Customer customer){
@@ -63,6 +68,18 @@ public class CustomerData {
         return listCustomer.get(customerName);
     }
 
+    public boolean checkIsExistEmail( String email) {
+        boolean a = false;
+        for (Map.Entry<String, Customer> check : listCustomer.entrySet()) {
+            a = check.getValue().getEmail().equals(email);
+        }
+        return a;
+    }
+
+    public Customer findByEmail(String email) {
+        return listCustomer.get(email);
+    }
+
     public void setPassword(String customerName, String newPassword){
         findByCustomerName(customerName).setPassword(newPassword);
     }
@@ -90,11 +107,15 @@ public class CustomerData {
     public void printHistory(String customerName){
         ArrayList<Exchangement> exchangements = findByCustomerName(customerName).getHistory();
         if (exchangements.size() == 0){
-            System.out.println("Khong co lich su giao dich.");
+            System.out.println("Không có lịch sử giao dịch nào.");
         } else {
-
+            int count = 0;
             for (int i = exchangements.size()-1; i >= 0 ; i--) {
                 System.out.printf("%d. %s: %,d VND\n",(exchangements.size() - i), exchangements.get(i).getName(), exchangements.get(i).getAmount());
+                count++;
+                if (count == 3){
+                    break;
+                }
             }
         }
 
