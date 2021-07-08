@@ -9,13 +9,13 @@ public class Customer {
     String dob;
     String gender;
     String email;
-    long balance;
+    String balance;
     ArrayList<Exchangement> history;
     public Customer(){
         history = new ArrayList<>();
     }
 
-    public Customer(String customerName, String password, String dob, String gender, String email, long balance){
+    public Customer(String customerName, String password, String dob, String gender, String email, String balance){
         this.customerName = customerName;
         this.password = password;
         this.dob = dob;
@@ -25,7 +25,7 @@ public class Customer {
         this.history = new ArrayList<>();
     }
 
-    public Customer(String customerName, String password, String dob, String gender, String email, long balance, ArrayList<Exchangement> history) {
+    public Customer(String customerName, String password, String dob, String gender, String email, String balance, ArrayList<Exchangement> history) {
         this.customerName = customerName;
         this.password = password;
         this.dob = dob;
@@ -75,9 +75,9 @@ public class Customer {
         this.email = email;
     }
 
-    public long getBalance() { return balance; }
+    public String getBalance() { return balance; }
 
-    public void setBalance(long balance) { this.balance = balance; }
+    public void setBalance(String balance) { this.balance = balance; }
 
     public ArrayList<Exchangement> getHistory() {
         return history;
@@ -103,7 +103,7 @@ public class Customer {
                 + "\nNgày, tháng, năm sinh: " + dob
                 + "\nGiới tính: " + gender
                 + "\nEmail: " + email
-                + String.format("\nSố dư tài khoản khả dụng: %,d VND.",balance)
+                + String.format("\nSố dư tài khoản khả dụng: %,d VND.",Long.parseLong(balance))
                 +"\n============================================================";
     }
 

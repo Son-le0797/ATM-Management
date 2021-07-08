@@ -5,7 +5,7 @@ import java.util.Date;
 public class Exchangement {
 
     String name;
-    long amount;
+    String amount;
 
 
     public Exchangement() {
@@ -13,16 +13,16 @@ public class Exchangement {
 
 
 
-    public long getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public Exchangement(String name, long amount) {
+    public Exchangement(String name, String amount) {
         this.name = name;
         this.amount = amount;
     }
 
-    public void setAmount(long amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 

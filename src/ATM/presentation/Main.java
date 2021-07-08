@@ -4,6 +4,8 @@ import ATM.service.CustomerService;
 import java.io.IOException;
 import java.util.Scanner;
 
+import static ATM.service.CustomerService.checkIsANumber;
+
 
 public class Main {
     public  static CustomerService customerService = new CustomerService();
@@ -21,23 +23,28 @@ public class Main {
 
         System.out.println("Kính chào quý khách !!");
 
-        int choice = -1;
+        String choice = "-1";
 
-        while (choice !=3) {
+        while (!choice.equals("3")) {
             System.out.println("\nDanh sách các chức năng: ");
             System.out.println("\t 1. Đăng nhập vào tài khoản.");
             System.out.println("\t 2. Đăng kí tài khoản mới.");
             System.out.println("\t 3. Thoát.");
             System.out.println("===============================================================");
-            System.out.println("Nhập lựa chọn của bạn: ");
 
-            choice = sc.nextInt();
+
+//            choice = sc.nextInt();
 //            while (choice != 1 || choice != 2 || choice != 3) {
 //                choice = sc.nextInt();
 //            }
-
 //            while (isNaN(choice))
-            switch (choice) {
+            choice = "-1";
+            while (!checkIsANumber(choice)) {
+                System.out.println("Nhập lựa chọn của bạn: ");
+                choice = new Scanner(System.in).nextLine();
+            }
+
+            switch (Integer.parseInt(choice)) {
                 case 1:
                     try {
                         customerService.login();
