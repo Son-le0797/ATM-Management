@@ -99,11 +99,10 @@ public class Customer {
     @Override
     public String toString() {
         return "Tên khách hàng: " + customerName
-                + "\nMật khẩu: " + password
                 + "\nNgày, tháng, năm sinh: " + dob
                 + "\nGiới tính: " + gender
                 + "\nEmail: " + email
-                + String.format("\nSố dư tài khoản khả dụng: %,d VND.",Long.parseLong(balance))
+                + String.format("\nSố dư khả dụng: %,d VND.",Long.parseLong(balance) - 50000)
                 +"\n============================================================";
     }
 

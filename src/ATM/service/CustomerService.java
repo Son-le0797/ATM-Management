@@ -105,6 +105,7 @@ public class CustomerService {
         String password = new Scanner(System.in).nextLine();
         while (!checkPassword(password)) {
             System.out.println("Mật khảu không hợp lệ, vui lòng nhập lại!");
+            System.out.println("Mật khẩu phải có ít nhất 8 kí tự bao gồm ít nhất 1 chữ hoa, 1 chữ thường và số.");
             password = new Scanner(System.in).nextLine();
         }
 
@@ -146,23 +147,23 @@ public class CustomerService {
     }
 
     public void login() throws IOException{
-        System.out.println("\t--- Đăng nhập vào tài khoản ---");
+        System.out.println("\n\t--- Đăng nhập vào tài khoản ---");
 
-        System.out.println("Nhập tên đăng nhập: ");
+        System.out.print("\nNhập tên đăng nhập: ");
         String customerName = new Scanner(System.in).nextLine();
-        System.out.println("Nhập mật khẩu: ");
+        System.out.print("\nNhập mật khẩu: ");
         String password = new Scanner(System.in).nextLine();
+        System.out.print("\n============================================================");
 
-        if (!this.customerData.listCustomer.containsKey(customerName)) {
-            System.out.println("Tên đăng nhập không tồn tại, vui lòng nhập lại!");
-        } else if (!this.findByCustomerName(customerName).getPassword().equals(password)) {
-            System.out.println("Mật khảu không chính xác, vui lòng nhập lại!");
-        } else {
-            System.out.println("Chào mừng quý khách " + this.findByCustomerName(customerName).getCustomerName() + " !");
+        if (!this.customerData.listCustomer.containsKey(customerName) || !this.findByCustomerName(customerName).getPassword().equals(password)) {
+            System.out.print("\nTên đăng nhập hoặc mật khảu không chính xác, vui lòng nhập lại!");
+            System.out.print("\n============================================================");
+        }  else {
+            System.out.print("\nChào mừng quý khách " + this.findByCustomerName(customerName).getCustomerName() + " !");
             this.customer = this.findByCustomerName(customerName);
             String check = "-1";
             while (Integer.parseInt(check) != 6) {
-                System.out.println("\nDanh sách các dịch vụ: ");
+                System.out.println("\n\nDanh sách các dịch vụ: ");
                 System.out.println("\t 1. Thay đổi thông tin.");
                 System.out.println("\t 2. Kiểm tra tài khoản.");
                 System.out.println("\t 3. Dịch vụ rút tiền.");
@@ -173,48 +174,66 @@ public class CustomerService {
 
                 check = "-1";
                 while (!checkIsANumber2(check)) {
-                    System.out.println("Nhập lựa chọn của bạn: ");
+                    System.out.print("Nhập lựa chọn của bạn: ");
                     check = new Scanner(System.in).nextLine();
                 }
 
                 switch (Integer.parseInt(check)) {
                     case 1:
                         String check2 = "-1";
-                        while (Integer.parseInt(check2) != 5) {
-                            System.out.println("\t--- Thay đổi thông tin --- ");
+                        while (Integer.parseInt(check2) != 3) {
+                            System.out.println("\n\t--- Thay đổi thông tin --- ");
                             System.out.println("\n\t 1. Mật khẩu.");
-                            System.out.println("\t 2. Ngày, tháng, năm sinh.");
-                            System.out.println("\t 3. Email.");
-                            System.out.println("\t 4. Giới tính.");
-                            System.out.println("\t 5. Quay lại.");
-
+//                            System.out.println("\t 2. Ngày, tháng, năm sinh.");
+                            System.out.println("\t 2. Email.");
+//                            System.out.println("\t 4. Giới tính.");
+                            System.out.println("\t 3. Quay lại.");
 
                             check2 = "-1";
-                            while (!checkIsANumber3(check2)) {
-                                System.out.println("Nhập lựa chọn của bạn: ");
+                            while (!checkIsANumber(check2)) {
+                                System.out.println("============================================================");
+                                System.out.print("Nhập lựa chọn của bạn: ");
                                 check2 = new Scanner(System.in).nextLine();
                             }
                             switch (Integer.parseInt(check2)) {
                                 case 1:
-                                    System.out.println("Nhập mật khảu mới: ");
-                                    String newPassword = new Scanner(System.in).nextLine();
-                                    while (newPassword.equals(password) || !checkPassword(newPassword)) {
-                                        System.out.println("Mật khảu không hợp lệ, vui lòng nhập lại");
-                                        newPassword = new Scanner(System.in).nextLine();
+                                    System.out.print("Nhập mật khẩu của bạn: ");
+                                    password = new Scanner(System.in).nextLine();
+                                    if (this.findByCustomerName(customerName).getPassword().equals(password)) {
+                                        System.out.print("Nhập mật khảu mới: ");
+                                        String newPassword = new Scanner(System.in).nextLine();
+                                        while (newPassword.equals(password) || !checkPassword(newPassword)) {
+                                            System.out.println("Mật khảu không hợp lệ, vui lòng nhập lại!");
+                                            System.out.println("Mật khẩu phải có ít nhất 8 kí tự bao gồm ít nhất 1 chữ hoa, 1 chữ thường và số.");
+                                            System.out.print("Nhập mật khẩu mới: ");
+                                            newPassword = new Scanner(System.in).nextLine();
+                                            System.out.print("Xác nhận lại mật khẩu: ");
+                                            String reNewPassword = new Scanner(System.in).nextLine();
+                                            while (!reNewPassword.equals(newPassword) || !checkPassword(reNewPassword)) {
+                                                System.out.println("Mật khảu xác nhận không hợp lệ hoặc không chính xác, vui lòng nhập lại!");
+                                                System.out.println("Mật khẩu phải có ít nhất 8 kí tự bao gồm ít nhất 1 chữ hoa, 1 chữ thường và số.");
+                                                reNewPassword = new Scanner(System.in).nextLine();
+                                            }
+                                        }
+                                        this.setPassword(customerName, newPassword);
+                                        System.out.print("\n============================================================");
                                     }
-                                    this.setPassword(customerName,newPassword);
+                                    else {
+                                        System.out.println("Mật khẩu không chính xác, không thể thay đổi mật khẩu!");
+                                        System.out.print("\n============================================================");
+                                    }
                                     break;
+//                                case 2:
+//                                    System.out.println("Nhập ngày, tháng, năm sinh: ");
+//                                    String newDob = new Scanner(System.in).nextLine();
+//                                    while (!checkDoB(newDob)) {
+//                                        System.out.println("Ngày, tháng, năm sinh không hợp lệ!");
+//                                        System.out.println("Nhập lại ngày, tháng, năm sinh(vd: 20/03/2015): ");
+//                                        newDob = new Scanner(System.in).nextLine();
+//                                    }
+//                                    this.setDob(customerName,newDob);
+//                                    break;
                                 case 2:
-                                    System.out.println("Nhập ngày, tháng, năm sinh: ");
-                                    String newDob = new Scanner(System.in).nextLine();
-                                    while (!checkDoB(newDob)) {
-                                        System.out.println("Ngày, tháng, năm sinh không hợp lệ!");
-                                        System.out.println("Nhập lại ngày, tháng, năm sinh(vd: 20/03/2015): ");
-                                        newDob = new Scanner(System.in).nextLine();
-                                    }
-                                    this.setDob(customerName,newDob);
-                                    break;
-                                case 3:
                                     System.out.println("Nhập email mới: ");
                                     String newEmail = new Scanner(System.in).nextLine();
                                     while (!checkEmail(newEmail)) {
@@ -222,17 +241,18 @@ public class CustomerService {
                                         newEmail = new Scanner(System.in).nextLine();
                                     }
                                     this.setEmail(customerName,newEmail);
+                                    System.out.print("\n============================================================");
                                     break;
-                                case 4:
-                                    System.out.println("Nhập giới tính(Nam, Nữ, Khác): ");
-                                    String newGender = new Scanner(System.in).nextLine();
-                                    while (!checkGender(newGender)) {
-                                        System.out.println("Giới tính nhập vào không hợp lệ!");
-                                        System.out.println("Nhập lại giới tính(Nam, Nữ, Khác): ");
-                                        newGender = new Scanner(System.in).nextLine();
-                                    }
-                                    this.setGender(customerName,newGender);
-                                    break;
+//                                case 4:
+//                                    System.out.println("Nhập giới tính(Nam, Nữ, Khác): ");
+//                                    String newGender = new Scanner(System.in).nextLine();
+//                                    while (!checkGender(newGender)) {
+//                                        System.out.println("Giới tính nhập vào không hợp lệ!");
+//                                        System.out.println("Nhập lại giới tính(Nam, Nữ, Khác): ");
+//                                        newGender = new Scanner(System.in).nextLine();
+//                                    }
+//                                    this.setGender(customerName,newGender);
+//                                    break;
 //                                case 5:
 //                                    System.exit(5);
 //                                    break;
@@ -246,8 +266,10 @@ public class CustomerService {
                     case 3:
                         System.out.println("\t--- Dịch vụ rút tiền --- ");
                         String Withdrawal = "-1";
-                        while (!checkMoney(Withdrawal) || Long.parseLong(Withdrawal) <= 0 || Long.parseLong(Withdrawal) > Long.parseLong(findByCustomerName(customerName).getBalance())) {
-                            System.out.printf("Số dư khả dụng của quý khách là: %,d VND\n",Long.parseLong(findByCustomerName(customerName).getBalance()));
+
+                        while (!checkMoney(Withdrawal) || Long.parseLong(Withdrawal) <= 0 || Long.parseLong(Withdrawal) > (Long.parseLong(findByCustomerName(customerName).getBalance()) - 50000)) {
+                            System.out.printf("Số tiền hiện có trong tài khoản quý khách là: %,d VND\n",Long.parseLong(findByCustomerName(customerName).getBalance()));
+                            System.out.printf("Số dư khả dụng của quý khách là: %,d VND\n",Long.parseLong(findByCustomerName(customerName).getBalance()) - 50000);
                             System.out.println("Nhập số tiền bạn muốn rút: ");
                             Withdrawal = new Scanner(System.in).nextLine();
                         }
@@ -260,18 +282,20 @@ public class CustomerService {
 //                            System.out.println("Số tiền muốn rút không hợp lệ, vui long nhập lại");
 //                        }
 
-                        this.findByCustomerName(customerName).getHistory().add(new Exchangement("rut tien", Withdrawal));
+                        this.findByCustomerName(customerName).getHistory().add(new Exchangement("rút tiền", Withdrawal));
 
-                        this.setBalance(customerName, String.valueOf(Long.parseLong(findByCustomerName(customerName).getBalance()) - Long.parseLong(Withdrawal)));
+                        this.setBalance(customerName, String.valueOf(Long.parseLong(findByCustomerName(customerName).getBalance())  - Long.parseLong(Withdrawal)));
                         System.out.printf("Quý khách vừa rút < %,d > VND.",Long.parseLong(Withdrawal));
-                        System.out.printf("\nSố dư khả dụng của quý khách là: %,d VND",Long.parseLong(findByCustomerName(customerName).getBalance()));
+                        System.out.printf("Số tiền hiện có trong tài khoản quý khách là: %,d VND\n",Long.parseLong(findByCustomerName(customerName).getBalance()));
+                        System.out.printf("\nSố dư khả dụng của quý khách là: %,d VND",Long.parseLong(findByCustomerName(customerName).getBalance()) - 50000);
                         System.out.println("\n============================================================");
                         // customer.getHistory().add(new Exchangement("rut tien", Withdrawal))
 
                         break;
                     case 4:
                         System.out.println("\t--- Dịch vụ nạp tiền --- ");
-                        System.out.printf("Số dư khả dụng của quý khách là: %,d VND\n",Long.parseLong(findByCustomerName(customerName).getBalance()));
+                        System.out.printf("Số tiền hiện có trong tài khoản quý khách là: %,d VND\n",Long.parseLong(findByCustomerName(customerName).getBalance()));
+                        System.out.printf("Số dư khả dụng của quý khách là: %,d VND\n",Long.parseLong(findByCustomerName(customerName).getBalance()) - 50000);
 
                         String recharge = "-1";
                         while (!checkMoney(recharge) || Long.parseLong(recharge) <= 0) {
@@ -279,16 +303,18 @@ public class CustomerService {
                             recharge = new Scanner(System.in).nextLine();
                         }
 
-                        this.findByCustomerName(customerName).getHistory().add(new Exchangement("nap tien",recharge));
+                        this.findByCustomerName(customerName).getHistory().add(new Exchangement("nạp tiền",recharge));
 
                         this.setBalance(customerName,String.valueOf(Long.parseLong(findByCustomerName(customerName).getBalance()) + Long.parseLong(recharge)));
                         System.out.printf("Quý khách vừa nạp < %,d > VND.",Long.parseLong(recharge));
+                        System.out.printf("Số tiền hiện có trong tài khoản quý khách là: %,d VND\n",Long.parseLong(findByCustomerName(customerName).getBalance()));
                         System.out.printf("\nSố dư khả dụng của quý khách là: %,d VND",Long.parseLong(findByCustomerName(customerName).getBalance()));
                         System.out.println("\n============================================================");
                         break;
                     case 5:
-                        System.out.println("\t--- Xem lịch sử giao dịch 3 lần gần nhất ---");
+                        System.out.println("\t--- Xem lịch sử giao dịch 5 lần gần nhất ---");
                         printHistory(customerName);
+                        System.out.print("\n============================================================");
                         break;
 //                    case 6:
 //                        System.exit(6);
@@ -313,7 +339,7 @@ public class CustomerService {
     }
 
     public static boolean checkGender(String gender){
-        String regex = "^(Nam|Nữ|Khác)";
+        String regex = "^(Nam|Nữ|nam|nữ)";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(gender);
         return matcher.matches();
@@ -327,7 +353,7 @@ public class CustomerService {
     }
 
     public static boolean checkPassword(String password){
-        String regex = "^[A-Za-z0-9]+[a-zA-Z0-9._]{4,256}";
+        String regex = "^(?=.*[A-Za-z0-9._])(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(password);
         return matcher.matches();
@@ -355,7 +381,7 @@ public class CustomerService {
     }
 
     public static boolean checkMoney(String balance) {
-        String regex = "^[0-9]+";
+        String regex = "^[0-9]{1,15}";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(balance);
         return matcher.matches();

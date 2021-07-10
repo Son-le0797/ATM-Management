@@ -40,7 +40,7 @@ public class Main {
 //            while (isNaN(choice))
             choice = "-1";
             while (!checkIsANumber(choice)) {
-                System.out.println("Nhập lựa chọn của bạn: ");
+                System.out.print("Nhập lựa chọn của bạn: ");
                 choice = new Scanner(System.in).nextLine();
             }
 

@@ -17,6 +17,10 @@ public class CustomerData {
         listCustomer = new HashMap<>();
     }
 
+    public void createFile() throws IOException {
+
+    }
+
     public void writeFile() throws IOException {
         File file = new File(PATH);
         if (!file.exists()) {
@@ -74,9 +78,9 @@ public class CustomerData {
         return a;
     }
 
-    public Customer findByEmail(String email) {
-        return listCustomer.get(email);
-    }
+//    public Customer findByEmail(String email) {
+//        return listCustomer.get(email);
+//    }
 
     public void setPassword(String customerName, String newPassword){
         findByCustomerName(customerName).setPassword(newPassword);
@@ -111,7 +115,7 @@ public class CustomerData {
             for (int i = exchangements.size()-1; i >= 0 ; i--) {
                 System.out.printf("%d. %s: %,d VND\n",(exchangements.size() - i), exchangements.get(i).getName(), Long.parseLong(exchangements.get(i).getAmount()));
                 count++;
-                if (count == 3){
+                if (count == 5){
                     break;
                 }
             }
