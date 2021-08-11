@@ -11,6 +11,7 @@ public class Customer {
     String email;
     String balance;
     ArrayList<Exchangement> history;
+
     public Customer(){
         history = new ArrayList<>();
     }

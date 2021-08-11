@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Exchangement {
 
+    String customer_name;
     String name;
     String amount;
 
@@ -18,6 +19,13 @@ public class Exchangement {
     }
 
     public Exchangement(String name, String amount) {
+
+        this.name = name;
+        this.amount = amount;
+    }
+
+    public Exchangement(String customer_name, String name, String amount) {
+        this.customer_name = customer_name;
         this.name = name;
         this.amount = amount;
     }
